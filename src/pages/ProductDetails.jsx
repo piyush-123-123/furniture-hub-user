@@ -15,6 +15,7 @@ import {
 
 const ProductDetails = () => {
     const [product, setProduct] = useState(null);
+    const dispatch = useDispatch();
 
     const { sendRequest, loading, error } = useApi();
 
@@ -48,6 +49,10 @@ const ProductDetails = () => {
     if (!product) {
         return <h3>Product Not Found</h3>;
     }
+    const addToCartHandler = () => {
+  dispatch(cartActions.addItem(product));
+  alert("Product Added to Cart");
+};
 
 
     return (
@@ -76,6 +81,7 @@ const ProductDetails = () => {
                     <Button
                         variant="primary"
                         className="mt-3"
+                        onClick={addToCartHandler}
                     >
                         Add to Cart
                     </Button>
