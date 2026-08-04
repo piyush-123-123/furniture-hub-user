@@ -5,6 +5,7 @@ import Home from "../src/pages/Home";
 import  Products from "../src/pages/Products";
 import ProductDetails from "../src/pages/ProductDetails";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Cart from "../src/pages/Cart";
 
 const App=()=>{
 
@@ -20,6 +21,14 @@ const App=()=>{
   element={
     <ProtectedRoute>
       <ProductDetails />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/cart"
+  element={
+    <ProtectedRoute>
+      <Cart />
     </ProtectedRoute>
   }
 />
