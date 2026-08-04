@@ -4,6 +4,7 @@ import Login from "../src/pages/Login";
 import Home from "../src/pages/Home";
 import  Products from "../src/pages/Products";
 import ProductDetails from "../src/pages/ProductDetails";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App=()=>{
 
@@ -14,7 +15,14 @@ const App=()=>{
   <Route path="/signup" element={<Signup />} />
   <Route path="/login" element={<Login />} />
   <Route path="/products" element={<Products />} />
-  <Route path="/product/:id" element={<ProductDetails />} />
+  <Route
+  path="/product/:id"
+  element={
+    <ProtectedRoute>
+      <ProductDetails />
+    </ProtectedRoute>
+  }
+/>
   
 </Routes>
   

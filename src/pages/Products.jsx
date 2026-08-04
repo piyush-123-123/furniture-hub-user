@@ -82,10 +82,6 @@ const Products = () => {
                                 <Card.Title>{product.title}</Card.Title>
 
                                 <Card.Text>₹{product.price}</Card.Text>
-
-                                <Button variant="primary" >
-                                    Add to Cart
-                                </Button>
                                 <Button
                                     variant="outline-dark"
                                   

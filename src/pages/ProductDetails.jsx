@@ -69,8 +69,14 @@ const ProductDetails = () => {
                         {product.description}
                     </p>
                     <h5 className={product.inStock ? "text-success" : "text-danger"}>
-  {product.inStock ? "In Stock" : "Out of Stock"}
-</h5>
+                        {product.inStock ? "In Stock" : "Out of Stock"}
+                    </h5>
+                    <Button
+                        variant="primary"
+                        className="mt-3"
+                    >
+                        Add to Cart
+                    </Button>
 
                     <h5>
                         Quantity: {product.quantity}
