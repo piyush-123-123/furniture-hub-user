@@ -1,13 +1,14 @@
+import Header from "../components/Header";
+import HeroSlider from "../components/HeroSlider";
 
-const Home=()=>{
+const Home = () => {
+  return (
+    <>
+      <Header />
+      <HeroSlider />
 
-    return (
-        <div>
-            <h3>User Home</h3>
-        </div>
-    )
+    </>
+  );
+};
 
-
-
-}
 export default Home;
