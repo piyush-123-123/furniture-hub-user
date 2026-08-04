@@ -14,7 +14,13 @@ import { useNavigate } from "react-router-dom";
 
 const Header = () => {
     const navigate = useNavigate();
- 
+
+    const token = localStorage.getItem("token");
+   
+const logoutHandler = () => {
+  localStorage.removeItem("token");
+  navigate("/");
+};
 
 
     return (
@@ -24,22 +30,30 @@ const Header = () => {
                     🛋 Furniture Hub
                 </Navbar.Brand>
                 <Navbar.Collapse className="justify-content-end">
-                    <Button
-                        as={Link}
-                        to="/login"
-                        variant="outline-light"
-                        className="me-2"
-                    >
-                        Login
-                    </Button>
+                    {token ? (
+                        <Button variant="danger" onClick={logoutHandler}>
+                            Logout
+                        </Button>
+                    ) : (
+                        <>
+                            <Button
+                                as={Link}
+                                to="/login"
+                                variant="outline-light"
+                                className="me-2"
+                            >
+                                Login
+                            </Button>
 
-                    <Button
-                        as={Link}
-                        to="/signup"
-                        variant="warning"
-                    >
-                        Register
-                    </Button>
+                            <Button
+                                as={Link}
+                                to="/signup"
+                                variant="warning"
+                            >
+                                Register
+                            </Button>
+                        </>
+                    )}
                 </Navbar.Collapse>
             </Container>
         </Navbar>
