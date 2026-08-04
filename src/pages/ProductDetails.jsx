@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useApi from "../hooks/useApi";
 import { DATABASE_URL } from "../services/firebase";
+import { useDispatch } from "react-redux";
+import { cartActions } from "../store/cartSlice"
 import {
     Container,
     Row,
