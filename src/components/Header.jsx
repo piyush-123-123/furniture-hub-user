@@ -27,18 +27,30 @@ const Header = () => {
                 <Navbar.Brand as={Link} to="/">
                     🛋 Furniture Hub
                 </Navbar.Brand>
-              
+
                 <Navbar.Collapse className="justify-content-end">
-                      {token && (
-                    <Button
-                        as={Link}
-                        to="/cart"
-                        variant="outline-light"
-                        className="me-2"
-                    >
-                        🛒 Cart ({items.length})
-                    </Button>
-                )}
+                    {token && (
+                        <Button
+                            as={Link}
+                            to="/cart"
+                            variant="outline-light"
+                            className="me-2"
+                        >
+                            🛒 Cart ({items.length})
+                        </Button>
+
+
+                    )}
+                    {token && (
+                        <Button
+                            as={Link}
+                            to="/orders"
+                            variant="outline-light"
+                            className="me-2"
+                        >
+                            📦 Orders
+                        </Button>
+                    )}
                     {token ? (
                         <Button variant="danger" onClick={logoutHandler}>
                             Logout
