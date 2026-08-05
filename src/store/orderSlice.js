@@ -66,6 +66,9 @@ const orderSlice = createSlice({
     builder.addCase(placeOrder.fulfilled, (state, action) => {
   state.orders.push(action.payload);
 });
+builder.addCase(fetchOrders.fulfilled, (state, action) => {
+  state.orders = action.payload;
+});
   },
 });
 
