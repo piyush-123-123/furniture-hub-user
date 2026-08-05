@@ -21,6 +21,14 @@ const Address = () => {
     useEffect(() => {
         dispatch(fetchAddresses());
     }, [dispatch]);
+    useEffect(() => {
+  if (
+    addresses.length > 0 &&
+    !selectedAddress
+  ) {
+    dispatch(addressActions.selectAddress(addresses[0]));
+  }
+}, [addresses, selectedAddress, dispatch]);
 
 
     return (
