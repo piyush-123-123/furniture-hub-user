@@ -6,8 +6,21 @@ import  Products from "../src/pages/Products";
 import ProductDetails from "../src/pages/ProductDetails";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Cart from "../src/pages/Cart";
+import {useDispatch} from "react-redux";
+import {fetchCart} from "../src/store/cartSlice";
+import {useEffect} from "react";
 
 const App=()=>{
+  const dispatch=useDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      dispatch(fetchCart());
+    }
+  }, [dispatch]);
+  
 
   return (
   

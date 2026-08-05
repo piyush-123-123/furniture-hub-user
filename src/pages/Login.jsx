@@ -2,12 +2,15 @@ import { Form, Container, Card, Button } from "react-bootstrap";
 import { useState } from "react";
 import { API_KEY } from "../services/firebase";
 import { useNavigate, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
 
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -34,6 +37,7 @@ const Login = () => {
             alert("Login Successful");
             localStorage.setItem("token", data.idToken);
             localStorage.setItem("userId", data.localId);
+          
             navigate("/");
         }
         catch (err) {

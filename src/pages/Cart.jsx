@@ -7,7 +7,14 @@ import {
   Button,
 } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { cartActions } from "../store/cartSlice";
+import {
+  fetchCart,
+  increaseQuantity,
+  decreaseQuantity,
+  removeItem,
+} from "../store/cartSlice";
+
+
 const Cart = () => {
     
   const items = useSelector((state) => state.cart.items);
@@ -36,7 +43,7 @@ return (
   <Button
     variant="secondary"
     onClick={() =>
-      dispatch(cartActions.decreaseQuantity(item.id))
+      dispatch(decreaseQuantity(item.id))
     }
   >
     -
@@ -45,7 +52,7 @@ return (
   <Button
     variant="secondary"
     onClick={() =>
-      dispatch(cartActions.increaseQuantity(item.id))
+     dispatch(increaseQuantity(item.id))
     }
   >
     +
@@ -54,7 +61,7 @@ return (
   <Button
     variant="danger"
     onClick={() =>
-      dispatch(cartActions.removeItem(item.id))
+      dispatch(removeItem(item.id))
     }
   >
     Remove
