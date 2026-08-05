@@ -30,6 +30,33 @@ export const placeOrder = createAsyncThunk(
     };
   }
 );
+export const fetchOrders = createAsyncThunk(
+  "order/fetchOrders",
+  async () => {
+    const userId = localStorage.getItem("userId");
+
+    const response = await fetch(
+      `${DATABASE_URL}/orders/${userId}.json`
+    );
+
+    const data = await response.json();
+
+    if (!data) {
+      return [];
+    }
+
+    const loadedOrders = [];
+
+    for (const key in data) {
+      loadedOrders.push({
+        id: key,
+        ...data[key],
+      });
+    }
+
+    return loadedOrders;
+  }
+);
 
 const orderSlice = createSlice({
   name: "order",
