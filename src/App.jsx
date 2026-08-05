@@ -9,6 +9,7 @@ import Cart from "../src/pages/Cart";
 import { useDispatch } from "react-redux";
 import { fetchCart } from "../src/store/cartSlice";
 import { useEffect } from "react";
+import Orders from "./pages/Orders";
 
 import Address from "../src/pages/Address";
 import Checkout from "../src/pages/Checkout";

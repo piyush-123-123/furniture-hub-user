@@ -58,6 +58,25 @@ export const addToCart = createAsyncThunk(
         return updatedCart;
     }
 );
+export const clearCart = createAsyncThunk(
+  "cart/clearCart",
+  async () => {
+    const userId = localStorage.getItem("userId");
+
+    await fetch(
+      `${DATABASE_URL}/carts/${userId}.json`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify([]),
+      }
+    );
+
+    return [];
+  }
+);
 export const increaseQuantity = createAsyncThunk(
     "cart/increaseQuantity",
     async (id, { getState }) => {
@@ -151,6 +170,9 @@ const cartSlice = createSlice({
         builder.addCase(removeItem.fulfilled, (state, action) => {
             state.items = action.payload;
         });
+        builder.addCase(clearCart.fulfilled, (state, action) => {
+  state.items = action.payload;
+});
 
     },
 });

@@ -7,6 +7,7 @@ import {
 } from "../store/addressSlice";
 import { placeOrder } from "../store/orderSlice";
 import { useNavigate } from "react-router-dom";
+import { clearCart } from "../store/cartSlice";
 
 const Checkout = () => {
     const dispatch = useDispatch();
@@ -65,6 +66,8 @@ const Checkout = () => {
             };
 
             await dispatch(placeOrder(order)).unwrap();
+            await dispatch(clearCart()).unwrap();
+            navigate("/orders");
 
             alert("Order Placed Successfully");
 
