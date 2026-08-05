@@ -1,15 +1,18 @@
-import { Container, Card, Button,Form } from "react-bootstrap";
+import { Container, Card, Button, Form } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import AddressForm from "../pages/AddressForm";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAddresses, addressActions } from "../store/addressSlice";
-
+import { useNavigate } from "react-router-dom";
 
 const Address = () => {
 
 
     const [showForm, setShowForm] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+
 
     const {
         addresses,
@@ -22,13 +25,13 @@ const Address = () => {
         dispatch(fetchAddresses());
     }, [dispatch]);
     useEffect(() => {
-  if (
-    addresses.length > 0 &&
-    !selectedAddress
-  ) {
-    dispatch(addressActions.selectAddress(addresses[0]));
-  }
-}, [addresses, selectedAddress, dispatch]);
+        if (
+            addresses.length > 0 &&
+            !selectedAddress
+        ) {
+            dispatch(addressActions.selectAddress(addresses[0]));
+        }
+    }, [addresses, selectedAddress, dispatch]);
 
 
     return (
@@ -90,6 +93,15 @@ const Address = () => {
                 </div>
                 {showForm && <AddressForm onSuccess={() => setShowForm(false)} />}
             </Card>
+            <div className="text-end mt-4">
+                <Button
+                    variant="success"
+                    disabled={!selectedAddress}
+                    onClick={() => navigate("/checkout")}
+                >
+                    Continue
+                </Button>
+            </div>
         </Container>
     );
 };
