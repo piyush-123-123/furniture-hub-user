@@ -51,7 +51,23 @@ useEffect(() => {
       <Card className="p-3 mb-4 shadow">
         <h5>Saved Addresses</h5>
 
-        <p>No saved addresses.</p>
+        {addresses.length === 0 ? (
+  <p>No saved addresses.</p>
+) : (
+  addresses.map((address) => (
+    <Card key={address.id} className="p-3 mb-2">
+      <h6>{address.fullName}</h6>
+
+      <p className="mb-1">{address.phone}</p>
+
+      <p className="mb-1">{address.address}</p>
+
+      <p>
+        {address.city} - {address.pincode}
+      </p>
+    </Card>
+  ))
+)}
       </Card>
 
    
