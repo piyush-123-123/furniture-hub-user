@@ -1,46 +1,24 @@
 import { Container, Card, Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import useApi from "../hooks/useApi";
-import { DATABASE_URL } from "../services/firebase";
+import AddressForm from "../pages/AddressForm";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchAddresses } from "../store/addressSlice";
 
 
 const Address = () => {
 
-    const [addresses, setAddresses] = useState([]);
+
     const [showForm, setShowForm] = useState(false);
+    const dispatch = useDispatch();
 
-    const { sendRequest } = useApi();
+    const { addresses, loading, error } = useSelector(
+        (state) => state.address
+    );
+
     useEffect(() => {
-        const fetchAddresses = async () => {
-            try {
-                const userId = localStorage.getItem("userId");
+        dispatch(fetchAddresses());
+    }, [dispatch]);
 
-                const data = await sendRequest({
-                    url: `${DATABASE_URL}/addresses/${userId}.json`,
-                });
-
-                if (!data) {
-                    setAddresses([]);
-                    return;
-                }
-
-                const loadedAddresses = [];
-
-                for (const key in data) {
-                    loadedAddresses.push({
-                        id: key,
-                        ...data[key],
-                    });
-                }
-
-                setAddresses(loadedAddresses);
-            } catch (err) {
-                alert(err.message);
-            }
-        };
-
-        fetchAddresses();
-    }, [sendRequest]);
 
     return (
         <Container className="mt-4">
@@ -58,9 +36,9 @@ const Address = () => {
                         <Card key={address.id} className="p-3 mb-2">
                             <h6>{address.fullName}</h6>
 
-                            <p className="mb-1">{address.phone}</p>
+                            <p>{address.phone}</p>
 
-                            <p className="mb-1">{address.address}</p>
+                            <p>{address.address}</p>
 
                             <p>
                                 {address.city} - {address.pincode}
@@ -83,6 +61,7 @@ const Address = () => {
                         {showForm ? "Cancel" : "+ Add"}
                     </Button>
                 </div>
+                {showForm && <AddressForm onSuccess={() => setShowForm(false)} />}
             </Card>
         </Container>
     );
