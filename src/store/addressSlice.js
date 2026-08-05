@@ -34,11 +34,40 @@ export const fetchAddresses = createAsyncThunk(
     return loadedAddresses;
   }
 );
+export const addAddress = createAsyncThunk(
+  "address/addAddress",
+  async (address) => {
+    const userId = localStorage.getItem("userId");
+
+    const response = await fetch(
+      `${DATABASE_URL}/addresses/${userId}.json`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(address),
+      }
+    );
+
+    const data = await response.json();
+
+    return {
+      id: data.name,
+      ...address,
+    };
+  }
+);
+
 
 const addressSlice = createSlice({
   name: "address",
   initialState,
-  reducers: {},
+  reducers: {
+  selectAddress(state, action) {
+    state.selectedAddress = action.payload;
+  },
+},
   extraReducers: (builder) => {
 
     builder
@@ -54,8 +83,11 @@ const addressSlice = createSlice({
     state.loading = false;
     state.error = action.error.message;
   });
+  builder.addCase(addAddress.fulfilled, (state, action) => {
+  state.addresses.push(action.payload);
+});
   }
   ,
 });
-
+export const addressActions = addressSlice.actions;
 export default addressSlice.reducer;
