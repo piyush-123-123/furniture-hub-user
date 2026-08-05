@@ -1,8 +1,8 @@
-import { Container, Card, Button } from "react-bootstrap";
+import { Container, Card, Button,Form } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import AddressForm from "../pages/AddressForm";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchAddresses } from "../store/addressSlice";
+import { fetchAddresses, addressActions } from "../store/addressSlice";
 
 
 const Address = () => {
@@ -11,9 +11,12 @@ const Address = () => {
     const [showForm, setShowForm] = useState(false);
     const dispatch = useDispatch();
 
-    const { addresses, loading, error } = useSelector(
-        (state) => state.address
-    );
+    const {
+        addresses,
+        selectedAddress,
+        loading,
+        error,
+    } = useSelector((state) => state.address);
 
     useEffect(() => {
         dispatch(fetchAddresses());
@@ -34,15 +37,31 @@ const Address = () => {
                 ) : (
                     addresses.map((address) => (
                         <Card key={address.id} className="p-3 mb-2">
-                            <h6>{address.fullName}</h6>
+                            <div className="d-flex align-items-start">
 
-                            <p>{address.phone}</p>
+                                <Form.Check
+                                    type="radio"
+                                    name="selectedAddress"
+                                    checked={selectedAddress?.id === address.id}
+                                    onChange={() =>
+                                        dispatch(addressActions.selectAddress(address))
+                                    }
+                                    className="me-3 mt-1"
+                                />
 
-                            <p>{address.address}</p>
+                                <div>
+                                    <h6>{address.fullName}</h6>
 
-                            <p>
-                                {address.city} - {address.pincode}
-                            </p>
+                                    <p>{address.phone}</p>
+
+                                    <p>{address.address}</p>
+
+                                    <p>
+                                        {address.city} - {address.pincode}
+                                    </p>
+                                </div>
+
+                            </div>
                         </Card>
                     ))
                 )}
