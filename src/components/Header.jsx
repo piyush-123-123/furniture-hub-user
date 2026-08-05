@@ -1,26 +1,24 @@
-
 import {
     Navbar,
     Container,
-    Form,
-    FormControl,
     Button,
-    Nav,
 } from "react-bootstrap";
 
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 
 const Header = () => {
     const navigate = useNavigate();
 
     const token = localStorage.getItem("token");
-   
-const logoutHandler = () => {
-  localStorage.removeItem("token");
-  navigate("/");
-};
+    const items = useSelector((state) => state.cart.items);
+
+    const logoutHandler = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+        navigate("/");
+    };
 
 
     return (
@@ -29,7 +27,18 @@ const logoutHandler = () => {
                 <Navbar.Brand as={Link} to="/">
                     🛋 Furniture Hub
                 </Navbar.Brand>
+              
                 <Navbar.Collapse className="justify-content-end">
+                      {token && (
+                    <Button
+                        as={Link}
+                        to="/cart"
+                        variant="outline-light"
+                        className="me-2"
+                    >
+                        🛒 Cart ({items.length})
+                    </Button>
+                )}
                     {token ? (
                         <Button variant="danger" onClick={logoutHandler}>
                             Logout

@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import useApi from "../hooks/useApi";
 import { DATABASE_URL } from "../services/firebase";
 import { useDispatch } from "react-redux";
-import { cartActions } from "../store/cartSlice";
-import { useSelector } from "react-redux";
+import { addToCart } from "../store/cartSlice";
 import { useNavigate } from "react-router-dom";
 
 
@@ -20,11 +19,7 @@ import {
 
 const ProductDetails = () => {
     const navigate = useNavigate();
-    const items = useSelector((state) => state.cart.items);
-
-useEffect(() => {
-  console.log("Cart Items:", items);
-}, [items]);
+   
     const [product, setProduct] = useState(null);
     const dispatch = useDispatch();
 
@@ -38,10 +33,10 @@ useEffect(() => {
                     url: `${DATABASE_URL}/products/${id}.json`,
                 });
 
-               setProduct({
-  id,
-  ...data,
-});
+                setProduct({
+                    id,
+                    ...data,
+                });
             } catch (err) {
                 alert(err.message);
             }
@@ -64,15 +59,13 @@ useEffect(() => {
         return <h3>Product Not Found</h3>;
     }
     const addToCartHandler = () => {
- 
- console.log("Dispatching:", product);
 
-  dispatch(cartActions.addItem(product));
 
-  console.log("Dispatched");
+        dispatch(addToCart(product));
 
-  alert("Product Added to Cart");
-};
+
+        alert("Product Added to Cart");
+    };
 
 
 
@@ -114,12 +107,12 @@ useEffect(() => {
                 </Col>
             </Row>
             <Button
-  variant="success"
-  className="ms-2 mt-3"
-  onClick={() => navigate("/cart")}
->
-  Go to Cart
-</Button>
+                variant="success"
+                className="ms-2 mt-3"
+                onClick={() => navigate("/cart")}
+            >
+                Go to Cart
+            </Button>
         </Container>
     );
 };

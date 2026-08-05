@@ -33,6 +33,7 @@ const Login = () => {
             const data = await response.json();
             alert("Login Successful");
             localStorage.setItem("token", data.idToken);
+            localStorage.setItem("userId", data.localId);
             navigate("/");
         }
         catch (err) {
