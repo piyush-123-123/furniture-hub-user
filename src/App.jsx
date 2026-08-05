@@ -9,6 +9,7 @@ import Cart from "../src/pages/Cart";
 import {useDispatch} from "react-redux";
 import {fetchCart} from "../src/store/cartSlice";
 import {useEffect} from "react";
+import Address from "../src/pages/Address";
 
 const App=()=>{
   const dispatch=useDispatch();
@@ -45,8 +46,16 @@ const App=()=>{
     </ProtectedRoute>
   }
 />
-  
+<Route
+  path="/address"
+  element={
+    <ProtectedRoute>
+      <Address />
+    </ProtectedRoute>
+  }
+/>
 </Routes>
+
   
   )
 
