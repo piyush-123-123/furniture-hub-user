@@ -54,28 +54,32 @@ const Checkout = () => {
             </Container>
         );
     }
-    const placeOrderHandler = async () => {
-        try {
-            const order = {
-                items,
-                address: selectedAddress,
-                totalAmount,
-                paymentMethod: "Cash On Delivery",
-                status: "Placed",
-                orderDate: new Date().toISOString(),
-            };
+   const placeOrderHandler = async () => {
+  try {
+    const order = {
+      name: selectedAddress.fullName,
+      phone: selectedAddress.phone,
+      address: selectedAddress.address,
+      city: selectedAddress.city,
+      pincode: selectedAddress.pincode,
 
-            await dispatch(placeOrder(order)).unwrap();
-            await dispatch(clearCart()).unwrap();
-            navigate("/orders");
-
-            alert("Order Placed Successfully");
-
-            navigate("/orders");
-        } catch (err) {
-            alert(err.message);
-        }
+      items,
+      totalAmount,
+      paymentMethod: "Cash On Delivery",
+      status: "Placed",
+      orderDate: new Date().toISOString(),
     };
+
+    await dispatch(placeOrder(order)).unwrap();
+    await dispatch(clearCart()).unwrap();
+
+    alert("Order Placed Successfully");
+
+    navigate("/orders");
+  } catch (err) {
+    alert(err.message);
+  }
+};
 
     return (
         <Container className="mt-4">

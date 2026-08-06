@@ -1,18 +1,20 @@
+import { useEffect, lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import Signup from "../src/pages/Signup";
-import Login from "../src/pages/Login";
-import Home from "../src/pages/Home";
-import Products from "../src/pages/Products";
-import ProductDetails from "../src/pages/ProductDetails";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Cart from "../src/pages/Cart";
 import { useDispatch } from "react-redux";
-import { fetchCart } from "../src/store/cartSlice";
-import { useEffect } from "react";
-import Orders from "./pages/Orders";
+import Spinner from "react-bootstrap/Spinner";
 
-import Address from "../src/pages/Address";
-import Checkout from "../src/pages/Checkout";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { fetchCart } from "./store/cartSlice";
+
+const Home = lazy(() => import("./pages/Home"));
+const Signup = lazy(() => import("./pages/Signup"));
+const Login = lazy(() => import("./pages/Login"));
+const Products = lazy(() => import("./pages/Products"));
+const ProductDetails = lazy(() => import("./pages/ProductDetails"));
+const Cart = lazy(() => import("./pages/Cart"));
+const Address = lazy(() => import("./pages/Address"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const Orders = lazy(() => import("./pages/Orders"));
 
 const App = () => {
   const dispatch = useDispatch();
@@ -25,60 +27,73 @@ const App = () => {
     }
   }, [dispatch]);
 
-
   return (
+    <Suspense
+      fallback={
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ height: "100vh" }}
+        >
+          <Spinner animation="border" variant="primary" />
+        </div>
+      }
+    >
+      <Routes>
+        <Route path="/" element={<Home />} />
 
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/products" element={<Products />} />
-      <Route
-        path="/product/:id"
-        element={
-          <ProtectedRoute>
-            <ProductDetails />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/cart"
-        element={
-          <ProtectedRoute>
-            <Cart />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/address"
-        element={
-          <ProtectedRoute>
-            <Address />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/checkout"
-        element={
-          <ProtectedRoute>
-            <Checkout />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/orders"
-        element={
-          <ProtectedRoute>
-            <Orders />
-          </ProtectedRoute>
-        }
-      />
-    </Routes>
+        <Route path="/signup" element={<Signup />} />
 
+        <Route path="/login" element={<Login />} />
 
-  )
+        <Route path="/products" element={<Products />} />
 
+        <Route
+          path="/product/:id"
+          element={
+            <ProtectedRoute>
+              <ProductDetails />
+            </ProtectedRoute>
+          }
+        />
 
-}
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/address"
+          element={
+            <ProtectedRoute>
+              <Address />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/checkout"
+          element={
+            <ProtectedRoute>
+              <Checkout />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/orders"
+          element={
+            <ProtectedRoute>
+              <Orders />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </Suspense>
+  );
+};
 
 export default App;
