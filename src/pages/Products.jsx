@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap";
 
 
-const Products = () => {
+const Products = ({ search }) => {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
 
@@ -21,9 +21,17 @@ const Products = () => {
     const [searchParams] = useSearchParams();
 
     const category = searchParams.get("category");
-    const filteredProducts = category
-        ? products.filter((product) => product.category === category)
-        : products;
+    const filteredProducts = products.filter((product) => {
+        const matchesCategory = category
+            ? product.category === category
+            : true;
+
+        const matchesSearch = product.title
+            .toLowerCase()
+            .includes(search.toLowerCase());
+
+        return matchesCategory && matchesSearch;
+    });
     useEffect(() => {
         const fetchProducts = async () => {
             try {
@@ -84,7 +92,7 @@ const Products = () => {
                                 <Card.Text>₹{product.price}</Card.Text>
                                 <Button
                                     variant="outline-dark"
-                                  
+
                                     onClick={() => navigate(`/product/${product.id}`)}
                                 >
                                     View Details
