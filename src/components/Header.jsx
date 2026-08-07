@@ -27,8 +27,9 @@ const Header = () => {
                 <Navbar.Brand as={Link} to="/">
                     🛋 Furniture Hub
                 </Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-                <Navbar.Collapse className="justify-content-end">
+                <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                     {token && (
                         <Button
                             as={Link}
