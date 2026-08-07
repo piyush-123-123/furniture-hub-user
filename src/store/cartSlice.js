@@ -38,9 +38,15 @@ export const addToCart = createAsyncThunk(
             (item) => item.id === product.id
         );
 
+
         if (existingItem) {
-            if (existingItem.quantity >= existingItem.stock) {
-                alert(`Only ${existingItem.stock} items available`);
+            const response = await fetch(
+                `${DATABASE_URL}/products/${product.id}.json`
+            );
+
+            const latestProduct = await response.json();
+            if (existingItem.quantity >= latestProduct.quantity) {
+                alert(`Only ${latestProduct.quantity} items available`);
                 return cartItems;
             }
 

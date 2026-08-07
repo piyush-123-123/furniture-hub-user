@@ -13,7 +13,6 @@ import {
     Container,
     Row,
     Col,
-   
     Button,
 } from "react-bootstrap";
 
@@ -97,6 +96,7 @@ const ProductDetails = () => {
                         variant="primary"
                         className="mt-3"
                         onClick={addToCartHandler}
+                        disabled={product.quantity===0}
                     >
                         Add to Cart
                     </Button>
