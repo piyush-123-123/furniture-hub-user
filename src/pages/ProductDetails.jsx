@@ -13,7 +13,7 @@ import {
     Container,
     Row,
     Col,
-    Card,
+   
     Button,
 } from "react-bootstrap";
 
@@ -106,13 +106,6 @@ const ProductDetails = () => {
                     </h5>
                 </Col>
             </Row>
-            <Button
-                variant="success"
-                className="ms-2 mt-3"
-                onClick={() => navigate("/cart")}
-            >
-                Go to Cart
-            </Button>
         </Container>
     );
 };

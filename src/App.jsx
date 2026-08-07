@@ -2,9 +2,11 @@ import { useEffect, lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Spinner from "react-bootstrap/Spinner";
-
 import ProtectedRoute from "./components/ProtectedRoute";
 import { fetchCart } from "./store/cartSlice";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+
 
 const Home = lazy(() => import("./pages/Home"));
 const Signup = lazy(() => import("./pages/Signup"));
@@ -16,12 +18,24 @@ const Address = lazy(() => import("./pages/Address"));
 const Checkout = lazy(() => import("./pages/Checkout"));
 const Orders = lazy(() => import("./pages/Orders"));
 
-const App = () => {
-  const dispatch = useDispatch();
 
+
+const Layout = ({ children }) => (
+  <>
+    <Header />
+    <div style={{ paddingTop: "80px" }}>
+      {children}
+    </div>
+    <Footer />
+  </>
+);
+
+
+const App = () => {
+
+  const dispatch = useDispatch();
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     if (token) {
       dispatch(fetchCart());
     }
@@ -39,19 +53,20 @@ const App = () => {
       }
     >
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Layout><Home /></Layout>} />
 
         <Route path="/signup" element={<Signup />} />
 
         <Route path="/login" element={<Login />} />
 
-        <Route path="/products" element={<Products />} />
+        <Route path="/products" element={<Layout><Products /></Layout>} />
 
         <Route
           path="/product/:id"
           element={
             <ProtectedRoute>
-              <ProductDetails />
+              <Layout> <ProductDetails /></Layout>
+  
             </ProtectedRoute>
           }
         />
@@ -60,7 +75,8 @@ const App = () => {
           path="/cart"
           element={
             <ProtectedRoute>
-              <Cart />
+               <Layout> <Cart /></Layout>
+           
             </ProtectedRoute>
           }
         />
@@ -69,7 +85,8 @@ const App = () => {
           path="/address"
           element={
             <ProtectedRoute>
-              <Address />
+               <Layout>  <Address /></Layout>
+             
             </ProtectedRoute>
           }
         />
@@ -78,7 +95,8 @@ const App = () => {
           path="/checkout"
           element={
             <ProtectedRoute>
-              <Checkout />
+               <Layout>   <Checkout /></Layout>
+            
             </ProtectedRoute>
           }
         />
@@ -87,7 +105,8 @@ const App = () => {
           path="/orders"
           element={
             <ProtectedRoute>
-              <Orders />
+               <Layout>  <Orders /></Layout>
+             
             </ProtectedRoute>
           }
         />
