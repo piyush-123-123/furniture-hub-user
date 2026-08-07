@@ -8,6 +8,7 @@ import {
 import { placeOrder } from "../store/orderSlice";
 import { useNavigate } from "react-router-dom";
 import { clearCart } from "../store/cartSlice";
+import { DATABASE_URL } from "../services/firebase";
 
 const Checkout = () => {
     const dispatch = useDispatch();
