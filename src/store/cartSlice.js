@@ -39,6 +39,11 @@ export const addToCart = createAsyncThunk(
         );
 
         if (existingItem) {
+            if (existingItem.quantity >= existingItem.stock) {
+                alert(`Only ${existingItem.stock} items available`);
+                return cartItems;
+            }
+
             updatedCart = cartItems.map((item) =>
                 item.id === product.id
                     ? { ...item, quantity: item.quantity + 1 }
@@ -49,6 +54,7 @@ export const addToCart = createAsyncThunk(
                 ...cartItems,
                 {
                     ...product,
+                    stock: Number(product.quantity),
                     quantity: 1,
                 },
             ];
@@ -59,23 +65,23 @@ export const addToCart = createAsyncThunk(
     }
 );
 export const clearCart = createAsyncThunk(
-  "cart/clearCart",
-  async () => {
-    const userId = localStorage.getItem("userId");
+    "cart/clearCart",
+    async () => {
+        const userId = localStorage.getItem("userId");
 
-    await fetch(
-      `${DATABASE_URL}/carts/${userId}.json`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify([]),
-      }
-    );
+        await fetch(
+            `${DATABASE_URL}/carts/${userId}.json`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify([]),
+            }
+        );
 
-    return [];
-  }
+        return [];
+    }
 );
 export const increaseQuantity = createAsyncThunk(
     "cart/increaseQuantity",
@@ -84,11 +90,21 @@ export const increaseQuantity = createAsyncThunk(
 
         const cartItems = getState().cart.items;
 
-        const updatedCart = cartItems.map((item) =>
-            item.id === id
-                ? { ...item, quantity: item.quantity + 1 }
-                : item
-        );
+        const updatedCart = cartItems.map((item) => {
+            if (item.id === id) {
+                if (item.quantity >= item.stock) {
+                    alert(`Only ${item.stock} items available`);
+                    return item;
+                }
+
+                return {
+                    ...item,
+                    quantity: item.quantity + 1,
+                };
+            }
+
+            return item;
+        });
 
         await saveCart(userId, updatedCart);
 
@@ -171,8 +187,8 @@ const cartSlice = createSlice({
             state.items = action.payload;
         });
         builder.addCase(clearCart.fulfilled, (state, action) => {
-  state.items = action.payload;
-});
+            state.items = action.payload;
+        });
 
     },
 });

@@ -54,32 +54,46 @@ const Checkout = () => {
             </Container>
         );
     }
-   const placeOrderHandler = async () => {
-  try {
-    const order = {
-      name: selectedAddress.fullName,
-      phone: selectedAddress.phone,
-      address: selectedAddress.address,
-      city: selectedAddress.city,
-      pincode: selectedAddress.pincode,
+    const placeOrderHandler = async () => {
+        try {
+            const order = {
+                name: selectedAddress.fullName,
+                phone: selectedAddress.phone,
+                address: selectedAddress.address,
+                city: selectedAddress.city,
+                pincode: selectedAddress.pincode,
 
-      items,
-      totalAmount,
-      paymentMethod: "Cash On Delivery",
-      status: "Placed",
-      orderDate: new Date().toISOString(),
+                items,
+                totalAmount,
+                paymentMethod: "Cash On Delivery",
+                status: "Placed",
+                orderDate: new Date().toISOString(),
+            };
+
+            await dispatch(placeOrder(order)).unwrap();
+            for (const item of items) {
+                const newQuantity = item.stock - item.quantity;
+
+                await fetch(`${DATABASE_URL}/products/${item.id}.json`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        quantity: newQuantity,
+                        inStock: newQuantity > 0,
+                    }),
+                });
+            }
+            await dispatch(clearCart()).unwrap();
+
+            alert("Order Placed Successfully");
+
+            navigate("/orders");
+        } catch (err) {
+            alert(err.message);
+        }
     };
-
-    await dispatch(placeOrder(order)).unwrap();
-    await dispatch(clearCart()).unwrap();
-
-    alert("Order Placed Successfully");
-
-    navigate("/orders");
-  } catch (err) {
-    alert(err.message);
-  }
-};
 
     return (
         <Container className="mt-4">
