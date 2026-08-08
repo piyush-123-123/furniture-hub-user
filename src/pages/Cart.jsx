@@ -11,6 +11,7 @@ import {
     increaseQuantity,
     decreaseQuantity,
     removeItem,
+    clearCart,
 } from "../store/cartSlice";
 import { useNavigate } from "react-router-dom";
 
