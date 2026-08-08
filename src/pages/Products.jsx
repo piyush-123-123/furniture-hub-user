@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap";
 
 
-const Products = ({ search }) => {
+const Products = ({ search =""}) => {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
 
@@ -107,4 +107,4 @@ const Products = ({ search }) => {
 
 };
 
-export default Products;
+export default Products; 
