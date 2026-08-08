@@ -12,7 +12,7 @@ import {
     decreaseQuantity,
     removeItem,
 } from "../store/cartSlice";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const Cart = () => {
@@ -22,7 +22,7 @@ const Cart = () => {
         return total + Number(item.price) * item.quantity;
     }, 0);
     const dispatch = useDispatch();
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
     return (
         <Container className="mt-4">
@@ -74,6 +74,13 @@ const Cart = () => {
                     <h3 className="text-end mt-4">
                         Total: ₹{totalAmount}
                     </h3>
+                    <Button
+                        variant="danger"
+                        onClick={() => dispatch(clearCart())}
+                    >
+                        Clear Cart !
+                    </Button>
+                    
                     <div className="text-end mt-3">
                         <Button
                             variant="success"

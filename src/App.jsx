@@ -6,8 +6,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { fetchCart } from "./store/cartSlice";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-
-
 const Home = lazy(() => import("./pages/Home"));
 const Signup = lazy(() => import("./pages/Signup"));
 const Login = lazy(() => import("./pages/Login"));
@@ -17,8 +15,6 @@ const Cart = lazy(() => import("./pages/Cart"));
 const Address = lazy(() => import("./pages/Address"));
 const Checkout = lazy(() => import("./pages/Checkout"));
 const Orders = lazy(() => import("./pages/Orders"));
-
-
 
 const Layout = ({ children }) => (
   <>
@@ -30,9 +26,7 @@ const Layout = ({ children }) => (
   </>
 );
 
-
 const App = () => {
-
   const dispatch = useDispatch();
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -40,7 +34,6 @@ const App = () => {
       dispatch(fetchCart());
     }
   }, [dispatch]);
-
   return (
     <Suspense
       fallback={
@@ -65,8 +58,8 @@ const App = () => {
           path="/product/:id"
           element={
             <ProtectedRoute>
-              <Layout> <ProductDetails /></Layout>
-  
+              <Layout> <ProductDetails />
+              </Layout>
             </ProtectedRoute>
           }
         />
@@ -76,7 +69,6 @@ const App = () => {
           element={
             <ProtectedRoute>
                <Layout> <Cart /></Layout>
-           
             </ProtectedRoute>
           }
         />

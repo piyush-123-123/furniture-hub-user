@@ -1,7 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
-
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
@@ -22,7 +21,7 @@ const HeroSlider = () => {
         <Swiper
             modules={[Autoplay, Pagination, Navigation]}
             autoplay={{
-                delay: 3000,
+                delay: 4000,
                 disableOnInteraction: false,
             }}
             pagination={{ clickable: true }}
