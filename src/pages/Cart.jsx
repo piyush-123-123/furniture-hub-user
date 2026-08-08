@@ -74,14 +74,14 @@ const Cart = () => {
                     <h3 className="text-end mt-4">
                         Total: ₹{totalAmount}
                     </h3>
-                    <Button
-                        variant="danger"
-                        onClick={() => dispatch(clearCart())}
-                    >
-                        Clear Cart !
-                    </Button>
-                    
-                    <div className="text-end mt-3">
+                    <div className="d-flex justify-content-end gap-2 mt-3">
+                        <Button
+                            variant="danger"
+                            onClick={() => dispatch(clearCart())}
+                        >
+                            Clear Cart
+                        </Button>
+
                         <Button
                             variant="success"
                             onClick={() => navigate("/address")}
